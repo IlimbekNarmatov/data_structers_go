@@ -1,11 +1,15 @@
 package main
 
 import (
-    "fmt"
-    "data_structures/errors"
+	"data_structures/linked_list"
+	"fmt"
 )
 
-func main(){
-    e := errors.IndexOutOfRange{}
-	fmt.Println(e.Error())
+func main() {
+	list := &linked_list.SingleLinkedList[int]{}
+	list.AddFirst(2)
+	list.AddFirst(1)
+	fmt.Println("Hello World")
+	fmt.Println(list.Len())
+    fmt.Println(list)
 }
