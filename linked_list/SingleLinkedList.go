@@ -29,12 +29,12 @@ func (s *SingleLinkedList[T]) AddLast(t T) error {
 	return s.Add(s.size, t)
 }
 
-func (s *SingleLinkedList[T]) RemoveFirst(t T) (*T, error) {
-	return nil, nil
+func (s *SingleLinkedList[T]) RemoveFirst() (*T, error) {
+	return s.Remove(0)
 }
 
-func (s *SingleLinkedList[T]) RemoveLast(t T) (*T, error) {
-	return nil, nil
+func (s *SingleLinkedList[T]) RemoveLast() (*T, error) {
+	return s.Remove(s.Len()-1)
 }
 
 func (s *SingleLinkedList[T]) Add(i int, t T) error {
@@ -63,7 +63,23 @@ func (s *SingleLinkedList[T]) Add(i int, t T) error {
 }
 
 func (s *SingleLinkedList[T]) Remove(i int) (*T, error) {
-	return nil, nil
+    if s.Empty() || i < 0 || i >= s.Len() {
+        return nil, errors.IndexOutOfRange{}
+    }
+    if i == 0 {
+        h := s.head
+        s.size--
+        s.head = s.head.next
+        return &h.t, nil
+    }
+    runner := s.head
+    for j := 0; j < i-1; j++ {
+        runner = runner.next
+    }
+    n := runner.next
+    runner.next = runner.next.next
+    s.size--
+	return &n.t, nil
 }
 
 func (s *SingleLinkedList[T]) Len() int {
@@ -77,14 +93,18 @@ func (s *SingleLinkedList[T]) Empty() bool {
 func (s *SingleLinkedList[T]) String() string {
 	var sb strings.Builder
     sb.WriteString("[")
-    divider := ", "
+    divider := ","
 	for runner := s.head; runner != nil; runner = runner.next {
 		t := reflect.ValueOf(runner.t)
 		sb.WriteString(fmt.Sprint(t))
-        if(runner.next != nil){
+        if runner.next != nil {
             sb.WriteString(divider)
         }
 	}
     sb.WriteString("]")
 	return sb.String()
+}
+
+func (s singleNode[T]) String() string {
+	return "singleNode"
 }

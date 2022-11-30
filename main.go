@@ -9,6 +9,7 @@ func main() {
 	list := &linked_list.SingleLinkedList[int]{}
 	list.AddFirst(2)
 	list.AddFirst(1)
+    list.RemoveFirst()
 	fmt.Println("Hello World")
 	fmt.Println(list.Len())
     fmt.Println(list)
